@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn CFOP | PLL</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn CFOP | PLL Trainer</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Learn CFOP</span>
+      </div>
+      <ul class="nav-links">
+        <li><a data-nav-link href="index.html">Home</a></li>
+        <li><a data-nav-link href="cross.html">Cross</a></li>
+        <li><a data-nav-link href="f2l.html">F2L</a></li>
+        <li><a data-nav-link href="oll.html">OLL</a></li>
+        <li><a data-nav-link href="pll.html">PLL</a></li>
+      </ul>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+        <span aria-hidden="true">☀︎</span>
+        <span data-theme-label>Dark mode</span>
+      </button>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="oll-layout surface-card">
+      <div>
+        <p class="lead">Top is solved; set the 12 side stickers (PLL ring) in the order north → west → east → south.</p>
+        <h1>PLL trainer</h1>
+        <p class="lead">Colors assign in batches of three: Red → Green → Blue → Orange. Current fill color is shown below.</p>
+        <div class="status" id="pll-current-color">Assigning: Red</div>
+      </div>
+
+      <div id="pll-board" class="oll-board" aria-label="PLL side ring"></div>
+
+      <div class="oll-controls">
+        <button class="btn btn-primary" type="button" id="pll-search">Search for solution</button>
+        <button class="btn btn-ghost" type="button" id="pll-reset">Reset pattern</button>
+      </div>
+
+      <div class="result" aria-live="polite">
+        <div class="status" id="pll-status">Side colors: 0/12 · Assigning: Red</div>
+        <div id="pll-match"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/site.js" defer></script>
+  <script src="js/pll.js" defer></script>
+</body>
+</html>
