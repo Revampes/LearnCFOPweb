@@ -21,6 +21,18 @@
     { row: 4, col: 3, idx: 11 },
   ];
 
+  const topPattern = [
+    { row: 1, col: 1 },
+    { row: 1, col: 2 },
+    { row: 1, col: 3 },
+    { row: 2, col: 1 },
+    { row: 2, col: 2 },
+    { row: 2, col: 3 },
+    { row: 3, col: 1 },
+    { row: 3, col: 2 },
+    { row: 3, col: 3 },
+  ];
+
   const colorSequence = [
     { name: 'Red', key: 'red' },
     { name: 'Green', key: 'green' },
@@ -31,18 +43,6 @@
   const ringColors = Array(12).fill(null);
   const colorCounts = { red: 0, green: 0, blue: 0, orange: 0 };
 
-  const nextColorForTile = (current) => {
-    const options = [null, ...colorSequence.map((c) => c.key)];
-    let idx = options.indexOf(current);
-    for (let i = 1; i <= options.length; i += 1) {
-      const candidate = options[(idx + i) % options.length];
-      if (candidate === null) return null;
-      if (candidate === current) return candidate;
-      if (colorCounts[candidate] < 3) return candidate;
-    }
-    return current;
-  };
-
   const currentFillingColor = () => {
     for (const c of colorSequence) {
       if (colorCounts[c.key] < 3) return c;
@@ -51,8 +51,20 @@
   };
 
   const updateColorLabel = () => {
+    const totalAssigned = ringColors.filter(Boolean).length;
+    if (totalAssigned === 12) {
+      colorLabel.textContent = 'Assigning: Complete';
+      return;
+    }
     const c = currentFillingColor();
     colorLabel.textContent = `Assigning: ${c.name} (${colorCounts[c.key]}/3)`;
+  };
+
+  const makeTopSticker = () => {
+    const el = document.createElement('div');
+    el.className = 'sticker top active static';
+    el.setAttribute('aria-hidden', 'true');
+    return el;
   };
 
   const makeSticker = ({ idx, orientation }) => {
@@ -62,11 +74,29 @@
     el.dataset.index = idx;
     el.setAttribute('aria-label', `Side sticker ${idx + 1}`);
     el.addEventListener('click', () => {
+      const target = currentFillingColor();
+      if (!target) return;
+
       const current = ringColors[idx];
-      const next = nextColorForTile(current);
-      if (current) colorCounts[current] -= 1;
-      if (next) colorCounts[next] += 1;
-      ringColors[idx] = next;
+
+      if (current === target.key) {
+        colorCounts[current] = Math.max(0, colorCounts[current] - 1);
+        ringColors[idx] = null;
+        render();
+        matchEl.innerHTML = '';
+        return;
+      }
+
+      if (current) {
+        colorCounts[current] = Math.max(0, colorCounts[current] - 1);
+      }
+
+      if (colorCounts[target.key] < 3) {
+        ringColors[idx] = target.key;
+        colorCounts[target.key] += 1;
+      } else {
+        ringColors[idx] = null;
+      }
       render();
       matchEl.innerHTML = '';
     });
@@ -78,6 +108,10 @@
 
     ringOrder.forEach((cell) => {
       grid[cell.row][cell.col] = makeSticker({ idx: cell.idx, orientation: cell.orientation });
+    });
+
+    topPattern.forEach(({ row, col }) => {
+      grid[row][col] = makeTopSticker();
     });
 
     for (let r = 0; r < 5; r += 1) {
@@ -94,13 +128,18 @@
   const render = () => {
     board.querySelectorAll('.sticker').forEach((el) => {
       const idx = Number(el.dataset.index);
+      if (Number.isNaN(idx)) return;
       const color = ringColors[idx];
       el.classList.remove('color-red', 'color-green', 'color-blue', 'color-orange');
       if (color) el.classList.add(`color-${color}`);
     });
     const totalAssigned = ringColors.filter(Boolean).length;
     const c = currentFillingColor();
-    statusEl.textContent = `Side colors: ${totalAssigned}/12 · ${c.name} next`;
+    if (totalAssigned === 12) {
+      statusEl.textContent = 'Side colors: 12/12 · Complete';
+    } else {
+      statusEl.textContent = `Side colors: ${totalAssigned}/12 · ${c.name} next`;
+    }
     updateColorLabel();
   };
 

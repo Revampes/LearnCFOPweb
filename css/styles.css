@@ -260,6 +260,10 @@ header.site-header {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
+.sticker.static {
+  pointer-events: none;
+}
+
 .sticker:hover {
   transform: translateY(-1px) scale(1.01);
 }
