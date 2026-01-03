@@ -1,0 +1,29 @@
+[
+  {
+    "id": "F2L-01",
+    "name": "Corner above, edge above",
+    "cornerPos": "UFR",
+    "cornerOri": 0,
+    "edgePos": "UR",
+    "edgeOri": 0,
+    "solution": "U R U' R'"
+  },
+  {
+    "id": "F2L-02",
+    "name": "Corner twisted, edge above",
+    "cornerPos": "UFR",
+    "cornerOri": 1,
+    "edgePos": "UF",
+    "edgeOri": 0,
+    "solution": "R U R' U' R U' R'"
+  },
+  {
+    "id": "F2L-03",
+    "name": "Both in slot (needs separation)",
+    "cornerPos": "FR_SLOT",
+    "cornerOri": 0,
+    "edgePos": "FR",
+    "edgeOri": 0,
+    "solution": "R U' R' U' R U R'"
+  }
+]

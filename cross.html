@@ -5,8 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Learn CFOP | Cross</title>
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/loader.css" />
 </head>
 <body>
+  <div id="page-loader" class="page-loader is-active" role="status" aria-live="polite" aria-label="Loading page">
+    <div class="loader-card">
+      <div class="loader-visual">
+        <svg viewBox="0 0 60 60" stroke="#6D7582" stroke-linejoin="round" aria-hidden="true">
+          <g id="loader-cube" fill="#fff">
+            <path id="loader-base"></path>
+            <path id="loader-lid"></path>
+          </g>
+        </svg>
+      </div>
+      <div class="loader-text">
+        <div>Loading the trainer…</div>
+        <div class="loader-sub">Switching faces and setting stickers.</div>
+      </div>
+    </div>
+  </div>
   <header class="site-header">
     <nav class="navbar">
       <div class="brand">
@@ -28,10 +45,132 @@
   </header>
 
   <main class="page-shell">
-    <section class="surface-card">
-      <h1>Cross</h1>
-      <p class="lead">Quick drills and visual helpers for a consistent cross are on the way.</p>
-      <p>We will add practice flows, inspection tips, and color-neutral paths here soon.</p>
+    <section class="page-hero">
+      <div class="hero-panel">
+        <div class="pill">Cross lab</div>
+        <h1>Turn your Cross into a 6-move habit.</h1>
+        <p class="lead">Start color-neutral or stay on your main color. Practice inspection-first crosses, predictable fingertricks, and tiny AUFs that keep your F2L slots clean.</p>
+        <div class="hero-meta">
+          <span class="pill"><strong>12s</strong> inspection cap</span>
+          <span class="pill"><strong>6-8</strong> moves target</span>
+          <span class="pill"><strong>0</strong> regrips</span>
+        </div>
+        <div class="button-row">
+          <a class="btn btn-primary" href="f2l.html" data-loader-link>Continue to F2L</a>
+          <a class="btn btn-ghost" href="#drills">Jump to drills</a>
+        </div>
+      </div>
+      <div class="surface-card">
+        <h3>Targets for this session</h3>
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-label">Lookahead</div>
+            <div class="stat-value">+1 pair</div>
+            <span class="muted">Track your first F2L piece during the last cross turn.</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Grip</div>
+            <div class="stat-value">No regrips</div>
+            <span class="muted">Stay in home grip; avoid thumb shuffles after D/D'.</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Flow</div>
+            <div class="stat-value">0 pauses</div>
+            <span class="muted">Each move chained; commit to one plan per inspection.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="surface-card section-block">
+      <h2 class="section-title">Quick start (3 minutes)</h2>
+      <ul class="checklist">
+        <li>Pick a fixed color for 3 solves; then repeat the same scrambles color-neutral.</li>
+        <li>Plan all four edges plus final AUF during inspection. No mid-solve re-plans.</li>
+        <li>Execute with only U, D, R, F moves when possible. Avoid L/B unless planned.</li>
+        <li>On the last cross move, locate one F2L edge or corner. Call it out.</li>
+      </ul>
+      <p class="note">You should finish each rep in under 12 seconds including inspection; reset if you pause.</p>
+    </section>
+
+    <section class="surface-card section-block">
+      <h2 class="section-title">Inspection map</h2>
+      <div class="grid-cards">
+        <div class="tile-card">
+          <div class="eyebrow">Step 1</div>
+          <h3>Lock the base edge</h3>
+          <p>Pick the first edge that sits on D in two moves or less. Freeze that target and plan around it.</p>
+          <div class="tag-row">
+            <span class="tag">D-layer ready</span>
+            <span class="tag">Low rotation</span>
+          </div>
+        </div>
+        <div class="tile-card">
+          <div class="eyebrow">Step 2</div>
+          <h3>Pair two edges</h3>
+          <p>Find two edges that can slot together with an F/R trigger. Avoid dragging solved pieces.</p>
+          <div class="tag-row">
+            <span class="tag">Predict order</span>
+            <span class="tag">Fingertrick ready</span>
+          </div>
+        </div>
+        <div class="tile-card">
+          <div class="eyebrow">Step 3</div>
+          <h3>Last edge + AUF</h3>
+          <p>Reserve one move for AUF. Ask: do I finish with D, D', or D2? Call it before you start.</p>
+          <div class="tag-row">
+            <span class="tag">Predict AUF</span>
+            <span class="tag">No pauses</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="drills" class="section-block">
+      <h2 class="section-title">Drills</h2>
+      <div class="drill-grid">
+        <div class="drill-card">
+          <h4>12-second inspection</h4>
+          <p>Start timer at inspection. If you can't see all four edges + AUF by 12, skip the solve.</p>
+          <div class="tag-row"><span class="tag">Discipline</span><span class="tag">Planning</span></div>
+        </div>
+        <div class="drill-card">
+          <h4>One-side only</h4>
+          <p>Plan crosses using only F/R/D/U moves. Forces efficient pairings and fewer rotations.</p>
+          <div class="tag-row"><span class="tag">Move efficiency</span><span class="tag">Low regrip</span></div>
+        </div>
+        <div class="drill-card">
+          <h4>Lookahead bridge</h4>
+          <p>During the final cross move, name the first F2L edge or corner you will touch.</p>
+          <div class="tag-row"><span class="tag">F2L ready</span><span class="tag">Flow</span></div>
+        </div>
+        <div class="drill-card">
+          <h4>Scramble replay</h4>
+          <p>Do 3 solves on the same scramble: main color, opposite color, then full color-neutral.</p>
+          <div class="tag-row"><span class="tag">Color neutral</span><span class="tag">Adaptation</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="surface-card section-block">
+      <h2 class="section-title">Anchors and examples</h2>
+      <div class="simple-grid">
+        <div class="tile-card">
+          <div class="eyebrow">Common trigger</div>
+          <h3>F D' F' + D</h3>
+          <p>Great for pairing two edges on the front. Visualize the D' as a setup, not a correction.</p>
+        </div>
+        <div class="tile-card">
+          <div class="eyebrow">Insert from back</div>
+          <h3>R' F R</h3>
+          <p>When an edge is solved on D but flipped, keep F2L slots safe with this quick fix.</p>
+        </div>
+        <div class="tile-card">
+          <div class="eyebrow">Avoid regrip</div>
+          <h3>Wide U flick</h3>
+          <p>Use a wide U to realign without lifting the thumb. Faster than double flicks for AUF.</p>
+        </div>
+      </div>
     </section>
   </main>
 
