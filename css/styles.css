@@ -719,6 +719,125 @@ header.site-header {
   gap: 6px;
 }
 
+.timer-shell {
+  display: grid;
+  gap: 14px;
+}
+
+.timer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.timer-panel {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  gap: 10px;
+}
+
+.scramble-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px dashed var(--border);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  font-family: 'Inconsolata', monospace;
+}
+
+.timer-display {
+  font-family: 'Inconsolata', monospace;
+  font-size: clamp(60px, 10vw, 110px);
+  text-align: center;
+  padding: 24px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  box-shadow: var(--shadow);
+}
+
+.timer-instruction {
+  color: var(--muted);
+  font-size: 15px;
+  margin: 8px 0 0;
+}
+
+.timer-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.timer-stats {
+  display: grid;
+  gap: 12px;
+}
+
+.times-list {
+  display: grid;
+  gap: 8px;
+}
+
+.time-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.time-meta {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.time-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.time-actions button {
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.time-actions button.active {
+  background: color-mix(in srgb, var(--accent) 24%, transparent);
+}
+
+.timer-graph {
+  width: 100%;
+  height: 220px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.graph-empty {
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  height: 100%;
+  font-size: 14px;
+}
+
 .mini-board {
   display: grid;
   grid-template-columns: repeat(5, 16px);
@@ -776,6 +895,10 @@ footer {
   }
 
   .lab-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .timer-grid {
     grid-template-columns: 1fr;
   }
 }
