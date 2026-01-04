@@ -3,12 +3,16 @@
   if (!cube) return;
 
   const statusEl = document.getElementById('f2l-status');
-  const matchEl = document.getElementById('f2l-match');
-  const solutionEl = document.getElementById('f2l-solution');
   const cornerOriBtn = document.getElementById('corner-ori');
   const edgeOriBtn = document.getElementById('edge-ori');
-  const searchBtn = document.getElementById('f2l-search');
   const resetBtn = document.getElementById('f2l-reset');
+  
+  const addBtn = document.getElementById('add-case');
+  const downloadBtn = document.getElementById('download-json');
+  const algInput = document.getElementById('alg-input');
+  const nameInput = document.getElementById('name-input');
+  const caseListEl = document.getElementById('case-list');
+  const caseCountEl = document.getElementById('case-count');
 
   // Faces
   const faceU = cube.querySelector('.face-u');
@@ -21,6 +25,8 @@
     edge: null,
     edgeOri: 0,
   };
+
+  let collectedCases = [];
 
   const PIECE_IDS = {
     corner: {
@@ -116,7 +122,6 @@
       }
     }
     render();
-    search();
   };
 
   const getCornerColors = (pos, ori) => {
@@ -236,52 +241,79 @@
     if (statusEl) statusEl.textContent = msg;
   };
 
-  let casesData = [];
-  const loadCases = async () => {
-    if (casesData.length > 0) return casesData;
-    try {
-      const res = await fetch('data/f2l_cases.json');
-      if (!res.ok) throw new Error('Failed to load cases');
-      casesData = await res.json();
-      return casesData;
-    } catch (e) {
-      console.error(e);
-      return [];
-    }
-  };
-
-  const search = async () => {
-    if (!state.corner || !state.edge) return;
-    
-    const data = await loadCases();
-    
-    const cornerId = PIECE_IDS.corner[state.corner];
-    const edgeId = PIECE_IDS.edge[state.edge];
-
-    const found = data.find(c => 
-      c.cornerPos === cornerId && 
-      c.cornerOri === state.cornerOri && 
-      c.edgePos === edgeId && 
-      c.edgeOri === state.edgeOri
-    );
-
-    if (found) {
-      if (matchEl) matchEl.textContent = found.name;
-      if (solutionEl) solutionEl.innerHTML = `<div class='code-chip'>${found.solution}</div>`;
-    } else {
-      if (matchEl) matchEl.textContent = 'Case not found';
-      if (solutionEl) solutionEl.textContent = '';
-    }
-  };
-
   const reset = () => {
     state.corner = null;
     state.edge = null;
     state.cornerOri = 0;
     state.edgeOri = 0;
     render();
-    if (matchEl) matchEl.textContent = '';
-    if (solutionEl) solutionEl.textContent = '';
+    algInput.value = '';
+    nameInput.value = '';
+  };
+
+  const addCase = () => {
+    if (!state.corner || !state.edge) {
+      alert('Please select a corner and an edge first.');
+      return;
+    }
+    if (!algInput.value.trim()) {
+      alert('Please enter a solution algorithm.');
+      return;
+    }
+
+    const newCase = {
+      id: `F2L-${(collectedCases.length + 1).toString().padStart(2, '0')}`,
+      name: nameInput.value.trim() || `Case ${collectedCases.length + 1}`,
+      cornerPos: PIECE_IDS.corner[state.corner],
+      cornerOri: state.cornerOri,
+      edgePos: PIECE_IDS.edge[state.edge],
+      edgeOri: state.edgeOri,
+      solution: algInput.value.trim()
+    };
+
+    // Check for duplicates
+    const exists = collectedCases.find(c => 
+      c.cornerPos === newCase.cornerPos && 
+      c.cornerOri === newCase.cornerOri && 
+      c.edgePos === newCase.edgePos && 
+      c.edgeOri === newCase.edgeOri
+    );
+
+    if (exists) {
+      if (!confirm('This case already exists. Overwrite?')) return;
+      Object.assign(exists, newCase);
+    } else {
+      collectedCases.push(newCase);
+    }
+
+    updateList();
+    reset();
+    renderStatus('Case added! Select next case.');
+  };
+
+  const updateList = () => {
+    caseCountEl.textContent = collectedCases.length;
+    caseListEl.innerHTML = collectedCases.map(c => `
+      <div class="case-item">
+        <div>
+          <strong>${c.name}</strong><br>
+          <small>${c.cornerPos}:${c.cornerOri} / ${c.edgePos}:${c.edgeOri}</small>
+        </div>
+        <div style="text-align:right">
+          <code>${c.solution}</code>
+        </div>
+      </div>
+    `).join('');
+  };
+
+  const downloadJson = () => {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(collectedCases, null, 2));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", "f2l_cases.json");
+    document.body.appendChild(downloadAnchorNode); // required for firefox
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
   };
 
   createStickers(faceU, 'U');
@@ -292,7 +324,6 @@
     if (state.corner) {
       state.cornerOri = (state.cornerOri + 1) % 3;
       render();
-      search();
     }
   });
 
@@ -300,12 +331,22 @@
     if (state.edge) {
       state.edgeOri = (state.edgeOri + 1) % 2;
       render();
-      search();
     }
   });
 
   if (resetBtn) resetBtn.addEventListener('click', reset);
-  if (searchBtn) searchBtn.addEventListener('click', search);
+  if (addBtn) addBtn.addEventListener('click', addCase);
+  if (downloadBtn) downloadBtn.addEventListener('click', downloadJson);
 
-  loadCases();
+  // Load existing if any (optional, but good for editing)
+  fetch('data/f2l_cases.json')
+    .then(res => res.json())
+    .then(data => {
+      if (Array.isArray(data)) {
+        collectedCases = data;
+        updateList();
+      }
+    })
+    .catch(() => {});
+
 })();

@@ -919,3 +919,91 @@ footer {
     border-radius: 8px;
   }
 }
+
+/* 3D Cube Styles */
+.scene {
+  width: 280px;
+  height: 280px;
+  perspective: 1000px;
+  margin: 20px auto;
+}
+
+.cube {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(-25deg) rotateY(-45deg);
+  transition: transform 0.5s ease;
+  pointer-events: none;
+}
+
+.cube-face {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  background: #1e293b;
+  border: 4px solid #1e293b;
+  border-radius: 4px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 4px;
+  padding: 4px;
+  left: 50px;
+  top: 50px;
+  pointer-events: auto;
+}
+
+.face-u {
+  transform: rotateX(90deg) translateZ(90px);
+}
+
+.face-f {
+  transform: rotateY(0deg) translateZ(90px);
+}
+
+.face-r {
+  transform: rotateY(90deg) translateZ(90px);
+}
+
+.sticker {
+  width: 100%;
+  height: 100%;
+  background-color: var(--sticker-off);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.sticker:hover {
+  filter: brightness(1.1);
+  transform: scale(0.95);
+}
+
+.sticker.yellow { background-color: #facc15; }
+.sticker.red { background-color: #ef4444; }
+.sticker.blue { background-color: #3b82f6; }
+.sticker.white { background-color: #ffffff; }
+
+/* Highlight selected pieces */
+.sticker.is-selected {
+  box-shadow: inset 0 0 0 3px rgba(0,0,0,0.3);
+  z-index: 2;
+}
+
+.sticker.is-target {
+  animation: pulse-sticker 2s infinite;
+}
+
+@keyframes pulse-sticker {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+
+
+.sticker.orange { background-color: #f97316; }
+.sticker.green { background-color: #22c55e; }
+
