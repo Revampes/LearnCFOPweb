@@ -1007,3 +1007,16 @@ footer {
 .sticker.orange { background-color: #f97316; }
 .sticker.green { background-color: #22c55e; }
 
+
+.face-d {
+  transform: rotateX(-90deg) translateZ(90px);
+}
+
+.face-l {
+  transform: rotateY(-90deg) translateZ(90px);
+}
+
+.face-b {
+  transform: rotateY(180deg) translateZ(90px);
+}
+

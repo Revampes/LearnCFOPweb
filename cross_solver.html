@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn CFOP | Cross Solver</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/loader.css" />
+  <style>
+    .solver-controls {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .solver-status {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .solution-display {
+      background: var(--bg-surface);
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-family: monospace;
+      font-size: 1.2em;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Learn CFOP - Cross Solver</span>
+      </div>
+      <ul class="nav-links">
+        <li><a data-nav-link href="index.html">Home</a></li>
+        <li><a data-nav-link href="cross.html">Cross</a></li>
+        <li><a data-nav-link href="f2l.html">F2L</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="surface-card f2l-lab">
+      <div class="f2l-intro">
+        <h1>Cross Solution Provider</h1>
+        <p class="lead">Drag to rotate the cube. Select the 4 edges that contain White.</p>
+        <div class="status" id="solver-status">Selected: 0/4 edges</div>
+      </div>
+
+      <div class="lab-grid">
+        <div class="board-wrap">
+          <div class="scene" id="scene">
+            <div class="cube" id="cube">
+              <div class="cube-face face-u"></div>
+              <div class="cube-face face-l"></div>
+              <div class="cube-face face-f"></div>
+              <div class="cube-face face-r"></div>
+              <div class="cube-face face-b"></div>
+              <div class="cube-face face-d"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-stack">
+          <div class="solver-controls">
+            <div class="control-title">Solution</div>
+            <div class="solution-display" id="solution-text">
+              Waiting for input...
+            </div>
+            
+            <div class="button-row">
+              <button class="btn btn-primary" type="button" id="solve-btn">Solve Cross</button>
+              <button class="btn btn-ghost" type="button" id="reset-btn">Reset</button>
+            </div>
+          </div>
+          
+          <div class="surface-card">
+            <h3>Instructions</h3>
+            <ul class="checklist">
+              <li>Drag the cube to rotate view.</li>
+              <li>Click the 4 edges that have a White sticker.</li>
+              <li>Click "Solve Cross" to get the optimal solution (max 8 moves).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/site.js"></script>
+  <script src="js/cross_solver.js"></script>
+</body>
+</html>
