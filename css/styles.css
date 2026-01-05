@@ -934,7 +934,6 @@ footer {
   position: relative;
   transform-style: preserve-3d;
   transform: rotateX(-25deg) rotateY(-45deg);
-  transition: transform 0.5s ease;
   pointer-events: none;
 }
 

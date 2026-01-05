@@ -6,6 +6,29 @@
   <title>Learn CFOP | Cross</title>
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/loader.css" />
+  <style>
+    .solver-controls {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .solver-status {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .solution-display {
+      background: var(--bg-surface);
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-family: monospace;
+      font-size: 1.2em;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
 </head>
 <body>
   <div id="page-loader" class="page-loader is-active" role="status" aria-live="polite" aria-label="Loading page">
@@ -46,39 +69,53 @@
   </header>
 
   <main class="page-shell">
-    <section class="page-hero">
-      <div class="hero-panel">
-        <div class="pill">Cross lab</div>
-        <h1>Turn your Cross into a 6-move habit.</h1>
-        <p class="lead">Start color-neutral or stay on your main color. Practice inspection-first crosses, predictable fingertricks, and tiny AUFs that keep your F2L slots clean.</p>
-        <div class="hero-meta">
-          <span class="pill"><strong>12s</strong> inspection cap</span>
-          <span class="pill"><strong>6-8</strong> moves target</span>
-          <span class="pill"><strong>0</strong> regrips</span>
+    <section class="surface-card f2l-lab">
+      <div class="f2l-intro">
+        <h1>Cross Solution Provider</h1>
+        <p class="lead">Drag to rotate the cube. Select the 4 edges that contain White.</p>
+        <div class="status" id="solver-status">Selected: 0/4 edges</div>
+        <div class="status-sub" style="margin-top: 0.5rem; font-size: 0.95em; color: var(--muted);">
+          <strong>Orientation:</strong> Hold Yellow Top, Green Front
         </div>
-        <div class="button-row">
-          <a class="btn btn-primary" href="f2l.html" data-loader-link>Continue to F2L</a>
-          <a class="btn btn-ghost" href="#drills">Jump to drills</a>
-          <a class="btn btn-ghost" href="cross_solver.html">Open Cross Solver</a>
+        <div class="status-next" id="next-piece-display" style="margin-top: 0.25rem; font-weight: 600; color: var(--accent);">
+          Next Piece: White-Green
         </div>
       </div>
-      <div class="surface-card">
-        <h3>Targets for this session</h3>
-        <div class="stat-grid">
-          <div class="stat-card">
-            <div class="stat-label">Lookahead</div>
-            <div class="stat-value">+1 pair</div>
-            <span class="muted">Track your first F2L piece during the last cross turn.</span>
+
+      <div class="lab-grid">
+        <div class="board-wrap">
+          <div class="scene" id="scene">
+            <div class="cube" id="cube">
+              <div class="cube-face face-u"></div>
+              <div class="cube-face face-l"></div>
+              <div class="cube-face face-f"></div>
+              <div class="cube-face face-r"></div>
+              <div class="cube-face face-b"></div>
+              <div class="cube-face face-d"></div>
+            </div>
           </div>
-          <div class="stat-card">
-            <div class="stat-label">Grip</div>
-            <div class="stat-value">No regrips</div>
-            <span class="muted">Stay in home grip; avoid thumb shuffles after D/D'.</span>
+        </div>
+
+        <div class="control-stack">
+          <div class="solver-controls">
+            <div class="control-title">Solution</div>
+            <div class="solution-display" id="solution-text">
+              Waiting for input...
+            </div>
+            
+            <div class="button-row">
+              <button class="btn btn-primary" type="button" id="solve-btn">Solve Cross</button>
+              <button class="btn btn-ghost" type="button" id="reset-btn">Reset</button>
+            </div>
           </div>
-          <div class="stat-card">
-            <div class="stat-label">Flow</div>
-            <div class="stat-value">0 pauses</div>
-            <span class="muted">Each move chained; commit to one plan per inspection.</span>
+          
+          <div class="surface-card">
+            <h3>Instructions</h3>
+            <ul class="checklist">
+              <li>Drag the cube to rotate view.</li>
+              <li>Click the 4 edges that have a White sticker.</li>
+              <li>Click "Solve Cross" to get the optimal solution (max 8 moves).</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -177,5 +214,6 @@
   </main>
 
   <script src="js/site.js" defer></script>
+  <script src="js/cross.js" defer></script>
 </body>
 </html>
