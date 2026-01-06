@@ -51,26 +51,47 @@
   });
 
   // Touch support
+  let touchStartX, touchStartY;
+  let touchMoved = false;
+
   dragArea.addEventListener('touchstart', (e) => {
     isDragging = true;
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
+    touchStartX = startX;
+    touchStartY = startY;
+    touchMoved = false;
     e.preventDefault(); // Prevent scrolling while rotating
   });
 
   document.addEventListener('touchmove', (e) => {
     if (!isDragging) return;
-    const dx = e.touches[0].clientX - startX;
-    const dy = e.touches[0].clientY - startY;
+    const cx = e.touches[0].clientX;
+    const cy = e.touches[0].clientY;
+    
+    if (Math.abs(cx - touchStartX) > 10 || Math.abs(cy - touchStartY) > 10) {
+      touchMoved = true;
+    }
+
+    const dx = cx - startX;
+    const dy = cy - startY;
     rotY += dx * 1.5;
     rotX -= dy * 1.5;
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
+    startX = cx;
+    startY = cy;
     updateRotation();
   });
 
-  document.addEventListener('touchend', () => {
+  document.addEventListener('touchend', (e) => {
+    if (!isDragging) return;
     isDragging = false;
+    
+    if (!touchMoved) {
+      // Tap detected - manually trigger click handling for stickers
+      if (e.target.classList.contains('sticker') && !e.target.dataset.id.endsWith('4')) {
+        handleStickerClick({ target: e.target });
+      }
+    }
   });
 
 
