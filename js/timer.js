@@ -288,7 +288,7 @@
     if (state.status !== 'idle') return;
     state.status = 'holding';
     state.holdStartedAt = performance.now();
-    setInstruction('Holding… keep pressed for 0.5s.');
+    setInstruction('Holding the button for at least 0.5 seconds');
     state.holdTimer = setTimeout(() => {
       if (state.status === 'holding') {
         state.status = 'ready';
