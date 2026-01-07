@@ -83,9 +83,20 @@
       
       if (i === 4) {
         if (prefix === 'U') el.classList.add(C.Y);
-        if (prefix === 'F') el.classList.add(C.G); // Green Front
-        if (prefix === 'R') el.classList.add(C.O); // Orange Right
-        el.style.cursor = 'default';
+        // if (prefix === 'F') el.classList.add(C.G); // Green Front
+        // if (prefix === 'R') el.classList.add(C.O); // Orange Right
+        // el.style.cursor = 'default';
+      } 
+      
+      const isGreenStatic = prefix === 'F' && [3, 4, 6, 7].includes(i);
+      const isOrangeStatic = prefix === 'R' && [4, 5, 7, 8].includes(i);
+      const isCenterU = prefix === 'U' && i === 4;
+
+      if (isGreenStatic) el.classList.add(C.G);
+      if (isOrangeStatic) el.classList.add(C.O);
+
+      if (isCenterU || isGreenStatic || isOrangeStatic) {
+          el.style.cursor = 'default';
       } else {
         el.addEventListener('click', handleStickerClick);
       }
@@ -194,10 +205,20 @@
       el.className = 'sticker';
       el.classList.remove('is-selected');
       
-      // Restore center colors
-      if (el.dataset.id === 'U4') el.classList.add(C.Y);
-      if (el.dataset.id === 'F4') el.classList.add(C.G); // Green
-      if (el.dataset.id === 'R4') el.classList.add(C.O); // Orange
+      const id = el.dataset.id;
+
+      // Restore center colors and static highlights
+      if (id === 'U4') el.classList.add(C.Y);
+
+      // Green Face (F) - Center + Bottom Left Block (3, 4, 6, 7)
+      if (['F3', 'F4', 'F6', 'F7'].includes(id)) {
+        el.classList.add(C.G);
+      }
+
+      // Orange Face (R) - Center + Bottom Right Block (4, 5, 7, 8)
+      if (['R4', 'R5', 'R7', 'R8'].includes(id)) {
+        el.classList.add(C.O);
+      }
     });
 
     if (state.corner) {
