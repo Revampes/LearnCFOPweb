@@ -332,6 +332,29 @@
     handleTriggerUp();
   });
 
+  // Mobile support: prevent scrolling/dragging while holding
+  triggerArea?.addEventListener(
+    'touchstart',
+    (event) => {
+      // Allow buttons to work normally
+      if (event.target.closest('button, a, input, textarea, select, label')) {
+        return;
+      }
+      // Prevent scroll/zoom so long-press works reliably
+      event.preventDefault();
+      handleTriggerDown(event);
+    },
+    { passive: false }
+  );
+
+  triggerArea?.addEventListener('touchend', (event) => {
+    handleTriggerUp();
+  });
+
+  triggerArea?.addEventListener('touchcancel', (event) => {
+    handleTriggerUp();
+  });
+
   newScrambleBtn?.addEventListener('click', () => {
     generateScramble();
     setInstruction('Scramble refreshed. Hold to start.');
