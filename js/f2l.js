@@ -137,9 +137,9 @@
     // Ori 1: White on R (CW)
     // Ori 2: White on F (CCW)
     
-    let c = [C.W, C.O, C.G]; // U, F, R
-    if (ori === 1) c = [C.O, C.G, C.W]; // Twist CW: U=Orange, F=Green, R=White
-    if (ori === 2) c = [C.G, C.W, C.O]; // Twist CCW: U=Green, F=White, R=Orange
+    let c = [C.W, C.G, C.O]; // U, F, R
+    if (ori === 1) c = [C.G, C.O, C.W]; // Twist CW: U=Orange, F=Green, R=White
+    if (ori === 2) c = [C.O, C.W, C.G]; // Twist CCW: U=Green, F=White, R=Orange
 
     if (pos === 'UFR') {
       colors['U8'] = c[0]; colors['F2'] = c[1]; colors['R0'] = c[2];
