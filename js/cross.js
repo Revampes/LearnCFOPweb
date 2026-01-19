@@ -341,7 +341,13 @@
         const nextStr = JSON.stringify(nextState);
         
         if (nextStr === targetStr) {
-          solutionEl.innerHTML = [...moves, m].join(' ');
+          const solution = [...moves, m].join(' ');
+          solutionEl.innerHTML = solution;
+          
+          window.dispatchEvent(new CustomEvent('f2l-solution-found', { 
+            detail: { solution: solution } 
+          }));
+
           return;
         }
         
@@ -398,66 +404,7 @@
     return newState;
   };
 
-  const checkAutoScan = () => {
-    const params = new URLSearchParams(window.location.search);
-    if (!params.get('auto')) return;
-    
-    try {
-      const raw = localStorage.getItem('cubeScanData');
-      if (!raw) return;
-      const scan = JSON.parse(raw);
-      
-      edgeAssignments.clear();
-      
-      // Helper to get color at face, index
-      const getColor = (f, i) => scan[f] ? scan[f][i] : null;
-
-      // Iterate all physical edges to find our 4 white targets
-      edges.forEach((edge, idx) => {
-         const c1 = getColor(edge.s1[0], edge.s1[1]);
-         const c2 = getColor(edge.s2[0], edge.s2[1]);
-         
-         if (!c1 || !c2) return;
-         
-         // Define Targets
-         // D=White. 
-         // WG: White(D) + Green(F)
-         // WO: White(D) + Orange(R) -- Note: R=Orange in this codebase
-         // WB: White(D) + Blue(B)
-         // WR: White(D) + Red(L) -- Note: L=Red in this codebase
-         
-         // Check if this edge contains White ('D')
-         let whitePart = -1;
-         let otherColor = '';
-         
-         if (c1 === 'D') { whitePart = 0; otherColor = c2; }
-         else if (c2 === 'D') { whitePart = 1; otherColor = c1; }
-         
-         if (whitePart !== -1) {
-            let typeIdx = -1;
-             // Match otherColor to type
-             // F->0(WG), R->1(WO), B->2(WB), L->3(WR)
-             if (otherColor === 'F') typeIdx = 0;
-             else if (otherColor === 'R') typeIdx = 1;
-             else if (otherColor === 'B') typeIdx = 2;
-             else if (otherColor === 'L') typeIdx = 3;
-             
-             if (typeIdx !== -1) {
-               // We found a target edge at this location!
-               edgeAssignments.set(idx, { typeIdx, whitePart });
-             }
-         }
-      });
-      // Clean URL
-      window.history.replaceState({}, document.title, window.location.pathname);
-      
-    } catch (e) {
-      console.error('Scan import failed', e);
-    }
-  };
-
   createStickers();
-  checkAutoScan();
   render();
 
   solveBtn.addEventListener('click', solve);

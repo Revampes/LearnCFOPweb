@@ -289,6 +289,11 @@
     if (found) {
       if (matchEl) matchEl.textContent = found.name;
       if (solutionEl) solutionEl.innerHTML = `<div class='code-chip'>${found.solution}</div>`;
+      
+      // Dispatch event for animation
+      window.dispatchEvent(new CustomEvent('f2l-solution-found', { 
+        detail: { solution: found.solution } 
+      }));
     } else {
       if (matchEl) matchEl.textContent = 'Case not found';
       if (solutionEl) solutionEl.textContent = '';

@@ -286,6 +286,12 @@
         </div>
       `;
       matchEl.querySelector('.match-layout').appendChild(mini);
+
+      // Dispatch event for animation
+      window.dispatchEvent(new CustomEvent('f2l-solution-found', { 
+        detail: { solution: entry.solution } 
+      }));
+
     } catch (err) {
       statusEl.textContent = 'Something went wrong while searching. Please reload and try again.';
       console.error(err);

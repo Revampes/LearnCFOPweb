@@ -1019,3 +1019,63 @@ footer {
   transform: rotateY(180deg) translateZ(90px);
 }
 
+
+/* Animation Cube 3D Styles */
+#anim-cube {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 20px auto;
+  transform-style: preserve-3d;
+  transform: rotateX(-25deg) rotateY(-45deg);
+  transition: transform 0.3s ease;
+}
+
+.cubie {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  transform-style: preserve-3d;
+  /* transform-origin is critical for group rotation. 
+     Instead of setting it here, we rely on the trick of 
+     using a pivot or ensuring the translate matches the origin. 
+     We'll center the cube at 0,0,0 so rotation works naturally. */
+  top: 50%;
+  left: 50%;
+  margin-top: -25px; /* Center 0,0 */
+  margin-left: -25px;
+}
+
+.cubie .face {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border: 1.5px solid #000;
+  border-radius: 4px;
+  background: #000; /* Internal plastic color */
+  box-sizing: border-box;
+  backface-visibility: hidden;
+}
+
+/* Face transforms */
+.cubie .face-u { transform: rotateX(90deg) translateZ(25px); }
+.cubie .face-d { transform: rotateX(-90deg) translateZ(25px); }
+.cubie .face-f { transform: translateZ(25px); }
+.cubie .face-b { transform: rotateY(180deg) translateZ(25px); }
+.cubie .face-r { transform: rotateY(90deg) translateZ(25px); }
+.cubie .face-l { transform: rotateY(-90deg) translateZ(25px); }
+
+/* Sticker Colors - Override defaults */
+.cubie .face.sticker {
+  /* Class 'sticker' added by JS + color class */
+}
+.cubie .face.white { background-color: #ffffff; }
+.cubie .face.yellow { background-color: #facc15; }
+.cubie .face.green { background-color: #22c55e; }
+.cubie .face.blue { background-color: #3b82f6; }
+.cubie .face.red { background-color: #ef4444; }
+.cubie .face.orange { background-color: #f97316; }
+.cubie .face.center { 
+  /* Center stickers often have logo? Or just distinct styling if needed */
+}
+
