@@ -106,6 +106,7 @@
   };
 
   const handleStickerClick = (e) => {
+    e.stopPropagation();
     const stickerId = e.target.dataset.id;
     const piece = stickerToPiece[stickerId];
     
@@ -137,9 +138,12 @@
     // Ori 1: White on R (CW)
     // Ori 2: White on F (CCW)
     
-    let c = [C.W, C.G, C.O]; // U, F, R
-    if (ori === 1) c = [C.G, C.O, C.W]; // Twist CW: U=Orange, F=Green, R=White
-    if (ori === 2) c = [C.O, C.W, C.G]; // Twist CCW: U=Green, F=White, R=Orange
+    // Base: White-Green-Orange (Standard)
+    let c = [C.W, C.O, C.G]; // U, F, R
+    // Twist 1 (CW): U gets F(G), F gets R(O), R gets U(W) -> [G, O, W]
+    if (ori === 1) c = [C.G, C.O, C.W]; 
+    // Twist 2 (CCW): U gets R(O), F gets U(W), R gets F(G) -> [O, W, G]
+    if (ori === 2) c = [C.O, C.W, C.G]; 
 
     if (pos === 'UFR') {
       colors['U8'] = c[0]; colors['F2'] = c[1]; colors['R0'] = c[2];

@@ -974,6 +974,8 @@ footer {
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
+  pointer-events: auto;
+  touch-action: manipulation;
 }
 
 .sticker:hover {

@@ -172,6 +172,7 @@
   };
 
   const handleStickerClick = (e) => {
+    e.stopPropagation();
     // If we were dragging, don't process click
     // But click event fires after mouseup.
     // We can check if mouse moved significantly?
@@ -219,7 +220,8 @@
   const render = () => {
     // Reset all stickers to default gray (except centers)
     document.querySelectorAll('.sticker').forEach(el => {
-      if (el.dataset.id.endsWith('4')) return;
+      // Safety check: ensure dataset.id exists
+      if (!el.dataset.id || el.dataset.id.endsWith('4')) return;
       el.className = 'sticker';
       el.style.backgroundColor = '';
     });
