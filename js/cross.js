@@ -18,17 +18,17 @@
     cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
   };
 
+  let mouseMoved = false;
+  let mouseStartX, mouseStartY;
+
   // Attach to dragArea instead of scene for larger hit target
   dragArea.addEventListener('mousedown', (e) => {
-    // Don't start drag if clicking a button or sticker (unless we want to allow drag on stickers?)
-    // But stickers have their own click handlers.
-    // If we drag on a sticker, we might want to rotate.
-    // Let's allow it, but ensure click vs drag distinction.
-    // The sticker click handler fires on 'click', which happens after mouseup if no move.
-    
     isDragging = true;
     startX = e.clientX;
     startY = e.clientY;
+    mouseStartX = startX;
+    mouseStartY = startY;
+    mouseMoved = false;
     dragArea.style.cursor = 'grabbing';
     // Prevent default to avoid text selection
     e.preventDefault();
@@ -38,6 +38,11 @@
     if (!isDragging) return;
     const dx = e.clientX - startX;
     const dy = e.clientY - startY;
+
+    if (Math.abs(e.clientX - mouseStartX) > 5 || Math.abs(e.clientY - mouseStartY) > 5) {
+      mouseMoved = true;
+    }
+
     rotY += dx * 1.5; // Increased speed
     rotX -= dy * 1.5; // Increased speed
     startX = e.clientX;
@@ -45,9 +50,15 @@
     updateRotation();
   });
 
-  document.addEventListener('mouseup', () => {
+  document.addEventListener('mouseup', (e) => {
     isDragging = false;
     if (dragArea) dragArea.style.cursor = 'default'; // Or grab if we want to show it's draggable
+
+    if (!mouseMoved) {
+      if (e.target.classList.contains('sticker') && !e.target.dataset.id.endsWith('4')) {
+        handleStickerClick({ target: e.target });
+      }
+    }
   });
 
   // Touch support
@@ -172,7 +183,7 @@
   };
 
   const handleStickerClick = (e) => {
-    e.stopPropagation();
+    if (e.stopPropagation) e.stopPropagation();
     // If we were dragging, don't process click
     // But click event fires after mouseup.
     // We can check if mouse moved significantly?
