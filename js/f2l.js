@@ -133,17 +133,14 @@
 
   const getCornerColors = (pos, ori) => {
     const colors = {};
-    // Base: White-Green-Orange (Swapped F/R colors)
+    // Base: White-Green-Orange (Swapped F/R colors to match visual layout used elsewhere)
     // Ori 0: White on U
     // Ori 1: White on R (CW)
     // Ori 2: White on F (CCW)
     
-    // Base: White-Green-Orange (Standard)
     let c = [C.W, C.O, C.G]; // U, F, R
-    // Twist 1 (CW): U gets F(G), F gets R(O), R gets U(W) -> [G, O, W]
-    if (ori === 1) c = [C.G, C.O, C.W]; 
-    // Twist 2 (CCW): U gets R(O), F gets U(W), R gets F(G) -> [O, W, G]
-    if (ori === 2) c = [C.O, C.W, C.G]; 
+    if (ori === 1) c = [C.O, C.G, C.W]; // Twist CW: U=Orange, F=Green, R=White
+    if (ori === 2) c = [C.G, C.W, C.O]; // Twist CCW: U=Green, F=White, R=Orange
 
     if (pos === 'UFR') {
       colors['U8'] = c[0]; colors['F2'] = c[1]; colors['R0'] = c[2];

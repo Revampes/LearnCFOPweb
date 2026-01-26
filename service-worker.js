@@ -1,4 +1,5 @@
-const CACHE_NAME = 'learnop-v1';
+// Bump version to invalidate old cached assets (JS/HTML changes)
+const CACHE_NAME = 'learnop-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
